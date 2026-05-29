@@ -10,20 +10,21 @@
 
 ---
 
-# 📖 Sobre o Projeto
+# Sobre o Projeto
 
 O **2AM** é um sistema integrado de gestão de livraria baseado em arquitetura omnichannel, desenvolvido para centralizar e unificar operações de:
 
 - Ecommerce
-- POS (Point of Sale)
 - ERP (Backoffice)
 
 Todos os módulos compartilham:
+
 - a mesma API REST;
 - o mesmo banco de dados relacional;
 - a mesma lógica de negócio.
 
 O sistema foi projetado utilizando conceitos modernos de:
+
 - arquitetura de software;
 - modelagem relacional;
 - separação de responsabilidades;
@@ -33,19 +34,19 @@ O sistema foi projetado utilizando conceitos modernos de:
 
 ---
 
-# 🏗 Arquitetura Geral
+# Arquitetura Geral
 
 ```text
                  ┌────────────────────┐
                  │     Frontends      │
-                 └────────────────────┘
-
-      ┌──────────────┬──────────────┬──────────────┐
-      │ Ecommerce    │ ERP          │ POS          │
-      │ Web Store    │ Backoffice   │ Caixa        │
-      └──────┬───────┴──────┬───────┴──────┬───────┘
-             │              │              │
-             └──────────────┼──────────────┘
+                 └──────────┬─────────┘
+                            │
+            ┌───────────────┼───────────────┐
+            │  Ecommerce    │     ERP       │
+            │  Web Store    │  Backoffice   │
+            └──────┬────────┼───────┬───────┘
+                   │        │       │
+                   └────────┼───────┘
                             │
                      REST API (Express)
                             │
@@ -56,9 +57,9 @@ O sistema foi projetado utilizando conceitos modernos de:
 
 ---
 
-# 🚀 Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
-## 🔧 Backend
+## Backend
 
 - Node.js
 - TypeScript
@@ -74,29 +75,32 @@ O sistema foi projetado utilizando conceitos modernos de:
 
 ---
 
-## 🎨 Frontend
+## Frontend
 
 ### Ecommerce
+
 - HTML5
 - CSS3
 - JavaScript Vanilla
 
 ### ERP
+
 - HTML5
 - CSS3
 - JavaScript Vanilla
 
-### POS
+### POS -
+
 - ElectronJS
 - HTML/CSS/JavaScript Vanilla
 
 ---
 
-# 🧩 Módulos do Sistema
+# Módulos do Sistema
 
 ---
 
-# 🛒 Ecommerce
+# Ecommerce
 
 Plataforma online utilizada pelos clientes para compra de livros.
 
@@ -116,7 +120,7 @@ Plataforma online utilizada pelos clientes para compra de livros.
 
 ---
 
-# 💳 POS (Point of Sale)
+# POS (Point of Sale)
 
 Sistema de caixa utilizado na loja física.
 
@@ -132,7 +136,7 @@ Sistema de caixa utilizado na loja física.
 
 ---
 
-# 📊 ERP (Backoffice)
+# ERP (Backoffice)
 
 Sistema administrativo e gerencial.
 
@@ -151,13 +155,13 @@ Sistema administrativo e gerencial.
 
 ---
 
-# 🗄 Banco de Dados
+# Banco de Dados
 
 O sistema utiliza banco de dados relacional MySQL/MariaDB.
 
 ---
 
-# 📦 Principais Entidades
+# Principais Entidades
 
 - Users
 - Roles
@@ -176,29 +180,33 @@ O sistema utiliza banco de dados relacional MySQL/MariaDB.
 
 ---
 
-# 📈 Recursos Avançados do Banco
+# Recursos Avançados do Banco
 
 O projeto implementa recursos avançados de SQL:
 
-## ✅ Views
+## Views
+
 - vw_products_catalog
 - vw_sales_report
 - vw_inventory_status
 - vw_dashboard_metrics
 
-## ✅ Stored Procedures
+## Stored Procedures
+
 - sp_create_sale
 - sp_update_inventory
 - sp_monthly_sales_report
 - sp_register_purchase
 
-## ✅ Triggers
+## Triggers
+
 - redução automática de estoque;
 - prevenção de estoque negativo;
 - logs de movimentação;
 - atualização automática de timestamps.
 
-## ✅ Consultas Avançadas
+## Consultas Avançadas
+
 - livros mais vendidos;
 - clientes que mais compraram;
 - receita mensal;
@@ -209,7 +217,7 @@ O projeto implementa recursos avançados de SQL:
 
 ---
 
-# 🔐 Segurança
+# Segurança
 
 O sistema utiliza:
 
@@ -221,60 +229,7 @@ O sistema utiliza:
 
 ---
 
-# 📂 Estrutura do Projeto
-
-```text
-2am/
-│
-├── backend/
-│
-├── ecommerce/
-│
-├── erp/
-│
-├── pos/
-│
-├── database/
-│
-├── docs/
-│
-└── README.md
-```
-
----
-
-# 📁 Estrutura do Backend
-
-```text
-backend/src/
-│
-├── modules/
-│   ├── auth/
-│   ├── users/
-│   ├── roles/
-│   ├── products/
-│   ├── inventory/
-│   ├── sales/
-│   ├── payments/
-│   ├── suppliers/
-│   ├── purchases/
-│   ├── reports/
-│   └── dashboard/
-│
-├── middlewares/
-├── routes/
-├── services/
-├── repositories/
-├── database/
-├── schemas/
-├── utils/
-├── config/
-└── app.ts
-```
-
----
-
-# 🎨 Design do Sistema
+# Design do Sistema
 
 A identidade visual do projeto é inspirada em:
 
@@ -292,30 +247,32 @@ https://caravelaseditora.com/
 
 ---
 
-# 🎨 Paleta de Cores
+# Paleta de Cores
 
-| Cor | Hex |
-|------|------|
-| Preto | #111111 |
-| Branco | #FFFFFF |
-| Dourado | #D4AF37 |
+| Cor         | Hex     |
+| ----------- | ------- |
+| Preto       | #111111 |
+| Branco      | #FFFFFF |
+| Dourado     | #D4AF37 |
 | Cinza Claro | #F5F5F5 |
 
 ---
 
-# 🔤 Tipografia
+# Tipografia
 
 ## Títulos
+
 - Playfair Display
 - Merriweather
 
 ## Texto
+
 - Inter
 - Poppins
 
 ---
 
-# 📚 API REST
+# API REST
 
 A API REST foi construída seguindo:
 
@@ -330,7 +287,7 @@ A API REST foi construída seguindo:
 
 ---
 
-# 📑 Documentação da API
+# Documentação da API
 
 A documentação da API é gerada utilizando:
 
@@ -339,7 +296,7 @@ A documentação da API é gerada utilizando:
 
 ---
 
-# 🔄 Fluxo do Sistema
+# Fluxo do Sistema
 
 ```text
 Cliente
@@ -357,12 +314,12 @@ MySQL
 
 ---
 
-# ⚙ Instalação
+# Instalação
 
 # 1. Clonar repositório
 
 ```bash
-git clone https://github.com/seu-usuario/2am.git
+git clone https://github.com/AdolfoFigueiredo/2AM_Library.git
 ```
 
 ---
@@ -370,7 +327,7 @@ git clone https://github.com/seu-usuario/2am.git
 # 2. Entrar no projeto
 
 ```bash
-cd 2am
+cd 2AM_Library
 ```
 
 ---
@@ -390,9 +347,9 @@ PORT=3000
 
 DB_HOST=localhost
 DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=password
-DB_NAME=2am_db
+DB_USER=
+DB_PASSWORD=
+DB_NAME=Library
 
 JWT_SECRET=supersecret
 ```
@@ -412,21 +369,14 @@ npm install
 
 ```bash
 cd ecommerce
-npm install
+pnpm install
 ```
 
 ## ERP
 
 ```bash
 cd erp
-npm install
-```
-
-## POS
-
-```bash
-cd pos
-npm install
+pnpm install
 ```
 
 ---
@@ -477,9 +427,10 @@ npm run electron
 
 ---
 
-# 🧪 Testes
+# Testes
 
 O sistema deve possuir:
+
 - testes de rotas;
 - testes de autenticação;
 - testes de validação;
@@ -487,7 +438,7 @@ O sistema deve possuir:
 
 ---
 
-# 📌 Objetivos Acadêmicos
+# Objetivos Acadêmicos
 
 Este projeto tem como objetivo aplicar:
 
@@ -502,14 +453,14 @@ Este projeto tem como objetivo aplicar:
 
 ---
 
-# 👨‍💻 Autor
+# Autor
 
-Caleb
+Caleb Figueiredo <calebfigueiredo28@gmail.com>
 
 Projeto acadêmico — 12º Ano — Técnicas de Linguagem de Programação (TLP)
 
 ---
 
-# 📄 Licença
+# Licença
 
 Este projeto possui finalidade educacional e acadêmica.
