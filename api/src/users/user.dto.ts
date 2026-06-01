@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { tr } from "zod/v4/locales";
 
 export enum Gender {
-  MALE = "male",
-  FEMALE = "female",
+  MALE = "M",
+  FEMALE = "F",
 }
 
 export enum UsersRole {
@@ -18,12 +17,12 @@ export const UserSchema = z.object({
   lastName: z.string().min(3, "Nome deve ter pelo menos 3 catacteres"),
   email: z.email(),
   passwordHash: z.string().min(8, "Password deve ter pelo menos 8 catacteres"),
-  taxId: z.string().min(11, "BI/NIF deve ter pelo menos 3 caracters"),
+  taxId: z.string().min(11, "BI/NIF deve ter  11 caracters"),
   municipality: z.string(),
   neighborhood: z.string(),
   gender: z.enum(Gender),
-  birthDate: z.date(),
-  role: z.enum(UsersRole),
+  birthDate: z.coerce.date(),
+  role: z.enum(UsersRole) || UsersRole.CUSTOMER,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date(),

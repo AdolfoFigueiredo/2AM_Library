@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { testDatabaseConnection } from "../config/db.js";
-import { ApiResponse } from "../middlewares/ApiResponse.js"; // Garantindo o import da sua classe
+import { ApiResponse } from "./ApiResponse.js"; // Garantindo o import da sua classe
 
 export async function healtCheck(req: Request, res: Response) {
   const uptime = process.uptime();
@@ -25,10 +25,5 @@ export async function healtCheck(req: Request, res: Response) {
 
   const statusCode = dbStatus === "UP" ? 200 : 503;
 
-  return ApiResponse.success(
-    res,
-    healthInfo,
-    `Status: ${healthInfo.status}`,
-    statusCode,
-  );
+  return ApiResponse.success(res, healthInfo, statusCode);
 }

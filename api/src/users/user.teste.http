@@ -1,0 +1,100 @@
+@baseUrl = http://localhost:4000/api
+@tokenAdmin = {{loginAdmin.response.body.data.token}}
+@tokenEmployee = {{loginEmployee.response.body.data.token}}
+@tokenCustomer = {{loginCustomer.response.body.data.token}}
+
+# @name registarUtilizador
+### 1. PUBLIC: Criar uma Nova Conta (Assume 'customer' por padrão)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Diogo",
+  "lastName": "Ferreira",
+  "email": "diogo.ferreira@email.com",
+  "password": "NovaSenhaSegura123",
+  "taxId": "PT500123456",
+  "municipality": "Lisboa",
+  "neighborhood": "Alfama",
+  "gender": "M",
+  "birthDate": "1995-04-12"
+}
+
+### Captura dinâmica do ID do novo utilizador
+@newUserId = {{registarUtilizador.response.body.data.id}}
+
+###
+
+### 2. ADMIN: Listar Utilizadores Ativos
+GET {{baseUrl}}/users?limit=20
+Authorization: Bearer {{tokenAdmin}}
+
+###
+
+### 3. ADMIN/EMPLOYEE: Listar Clientes Inativos (v_InactiveCustomers)
+GET {{baseUrl}}/users/inactive
+Authorization: Bearer {{tokenEmployee}}
+
+###
+
+### 4. PUBLIC: Detalhes de um Utilizador por ID
+GET {{baseUrl}}/users/{{newUserId}}
+
+###
+
+### 5. CUSTOMER: Atualizar os próprios dados Cadastrais
+PUT {{baseUrl}}/users/{{newUserId}}
+Authorization: Bearer {{tokenCustomer}}
+Content-Type: application/json
+
+{
+  "neighborhood": "Parque das Nações"
+}
+
+###
+
+### 6. ADMIN/CUSTOMER: Desativação Lógica (Soft Delete)
+DELETE {{baseUrl}}/users/{{newUserId}}
+Authorization: Bearer {{tokenCustomer}}
+
+
+
+### =================================================================
+### CENTRAL DE AUTENTICAÇÃO E SESSÕES
+### =================================================================
+
+@baseUrl = http://localhost:4000/api
+
+# @name loginAdmin
+### 1. Autenticar como Administrador (Acesso Total)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin.master@library.com",
+  "password": "SenhaUltraSegura123"
+}
+
+### 
+
+# @name loginEmployee
+### 2. Autenticar como Funcionário (Operacional/Logística)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carlos.operacoes@library.com",
+  "password": "SenhaFuncionario123"
+}
+
+###
+
+# @name loginCustomer
+### 3. Autenticar como Cliente (E-commerce/Carrinho)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "bruno.cliente@gmail.com",
+  "password": "SenhaCliente123"
+}

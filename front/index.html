@@ -1,0 +1,631 @@
+j<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2AM Library — Acesso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-primary: #070b1a;
+        --bg-secondary: #10172a;
+        --bg-tertiary: #18213d;
+        --bg-hover: #1e2a42;
+        --orange: #ff8c42;
+        --orange-dim: rgba(255, 140, 66, 0.12);
+        --orange-glow: rgba(255, 140, 66, 0.3);
+        --blue-accent: #1f56cc;
+        --text-main: #ffffff;
+        --text-muted: #b8bfd3;
+        --text-subtle: #5e6a85;
+        --border: rgba(255, 255, 255, 0.07);
+        --status-success: #10b981;
+        --status-warning: #f59e0b;
+        --status-danger: #ef4444;
+        --radius-md: 10px;
+        --font-display: "Syne", sans-serif;
+        --font-body: "DM Sans", sans-serif;
+        --font-mono: "DM Mono", monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--text-main);
+        background: var(--bg-primary);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Background grid effect */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 140, 66, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 140, 66, 0.03) 1px, transparent 1px);
+        background-size: 48px 48px;
+        pointer-events: none;
+      }
+
+      /* Radial glow behind card */
+      body::after {
+        content: "";
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 140, 66, 0.06) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .auth-wrapper {
+        width: 100%;
+        max-width: 480px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Logo */
+      .auth-brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+      .brand-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--orange-dim);
+        border: 1.5px solid var(--orange);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        filter: drop-shadow(0 0 12px var(--orange-glow));
+      }
+      .brand-text .brand-name {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--text-main);
+      }
+      .brand-text .brand-sub {
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        color: var(--text-subtle);
+        letter-spacing: 0.2em;
+        margin-top: 2px;
+      }
+
+      /* Card */
+      .auth-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 32px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+      .auth-card::before {
+        content: "";
+        display: block;
+        height: 3px;
+        background: linear-gradient(90deg, var(--orange), transparent);
+        margin: -32px -32px 28px;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+      }
+
+      /* Tabs */
+      .auth-tabs {
+        display: flex;
+        gap: 0;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 4px;
+        margin-bottom: 28px;
+      }
+      .auth-tab {
+        flex: 1;
+        padding: 9px;
+        border: none;
+        background: transparent;
+        color: var(--text-subtle);
+        font-family: var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .auth-tab.active {
+        background: var(--bg-hover);
+        color: var(--orange);
+        border: 1px solid rgba(255, 140, 66, 0.2);
+      }
+
+      /* Form panels */
+      .form-panel {
+        display: none;
+      }
+      .form-panel.active {
+        display: block;
+      }
+
+      .panel-heading {
+        margin-bottom: 22px;
+      }
+      .panel-title {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .panel-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      /* Form elements */
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .form-group.full {
+        grid-column: span 2;
+      }
+      .form-label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+      }
+      .form-input {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 10px 14px;
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        outline: none;
+        transition: border-color 0.15s ease;
+        width: 100%;
+      }
+      .form-input:focus {
+        border-color: var(--orange);
+      }
+      .form-input::placeholder {
+        color: var(--text-subtle);
+      }
+      select.form-input {
+        cursor: pointer;
+      }
+      select.form-input option {
+        background: var(--bg-tertiary);
+      }
+
+      /* Inline feedback */
+      .field-error {
+        font-size: 0.7rem;
+        color: var(--status-danger);
+        font-family: var(--font-mono);
+        display: none;
+      }
+      .form-group.has-error .form-input {
+        border-color: var(--status-danger);
+      }
+      .form-group.has-error .field-error {
+        display: block;
+      }
+
+      .form-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 4px 0 18px;
+      }
+      .section-label {
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        color: var(--text-subtle);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      /* Btn */
+      .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: var(--orange);
+        border: none;
+        border-radius: var(--radius-md);
+        color: #000;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn-submit:hover {
+        opacity: 0.9;
+        box-shadow: 0 0 16px var(--orange-glow);
+      }
+      .btn-submit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Auth alert */
+      .auth-alert {
+        padding: 10px 14px;
+        border-radius: var(--radius-md);
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+        display: none;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .auth-alert.show {
+        display: flex;
+      }
+      .auth-alert.danger {
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        color: var(--status-danger);
+      }
+      .auth-alert.success {
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        color: var(--status-success);
+      }
+
+      /* Footer */
+      .auth-footer {
+        margin-top: 20px;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        color: var(--text-subtle);
+      }
+
+      /* Toast */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 300;
+      }
+      .toast {
+        background: var(--bg-tertiary);
+        border-left: 4px solid var(--orange);
+        padding: 12px 20px;
+        border-radius: var(--radius-md);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        animation: slideIn 0.2s ease;
+        min-width: 280px;
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      .toast.success {
+        border-left-color: var(--status-success);
+      }
+      .toast.danger {
+        border-left-color: var(--status-danger);
+      }
+      .toast-title {
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+      }
+      .toast-msg {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+
+      /* Spinner */
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+        border-top-color: #000;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 520px) {
+        .auth-card {
+          padding: 24px 20px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .form-group.full {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-wrapper">
+      <div class="auth-brand">
+        <div class="brand-icon">⬡</div>
+        <div class="brand-text">
+          <div class="brand-name">2AM Library</div>
+          <div class="brand-sub">SISTEMA DE GESTÃO</div>
+        </div>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button
+            class="auth-tab active"
+            id="tab-login"
+            onclick="switchTab('login')"
+          >
+            Entrar
+          </button>
+          <button
+            class="auth-tab"
+            id="tab-register"
+            onclick="switchTab('register')"
+          >
+            Criar Conta
+          </button>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="form-panel active" id="panel-login">
+          <div class="panel-heading">
+            <h2 class="panel-title">Bem-vindo de volta</h2>
+            <p class="panel-sub">
+              Aceda ao painel de gestão com as suas credenciais.
+            </p>
+          </div>
+
+          <div class="auth-alert danger" id="login-alert">
+            <span>⚠</span
+            ><span id="login-alert-msg">Credenciais inválidas.</span>
+          </div>
+
+          <form id="form-login" novalidate>
+            <div class="form-group" id="fg-login-email">
+              <label class="form-label" for="login-email">E-MAIL</label>
+              <input
+                type="email"
+                id="login-email"
+                class="form-input"
+                placeholder="nome@livraria.ao"
+                required
+                autocomplete="email"
+              />
+              <span class="field-error">Insira um e-mail válido.</span>
+            </div>
+            <div class="form-group" id="fg-login-password">
+              <label class="form-label" for="login-password">SENHA</label>
+              <input
+                type="password"
+                id="login-password"
+                class="form-input"
+                placeholder="••••••••"
+                required
+                minlength="6"
+                autocomplete="current-password"
+              />
+              <span class="field-error"
+                >Senha obrigatória (mín. 6 caracteres).</span
+              >
+            </div>
+            <button type="submit" class="btn-submit" id="btn-login">
+              <span>Entrar no Painel</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="form-panel" id="panel-register">
+          <div class="panel-heading">
+            <h2 class="panel-title">Criar Conta</h2>
+            <p class="panel-sub">
+              Preencha os dados para registar um novo utilizador.
+            </p>
+          </div>
+
+          <div class="auth-alert danger" id="register-alert">
+            <span>⚠</span><span id="register-alert-msg">Erro ao registar.</span>
+          </div>
+          <div class="auth-alert success" id="register-success">
+            <span>✔</span><span>Conta criada! Pode fazer login agora.</span>
+          </div>
+
+          <form id="form-register" novalidate>
+            <p class="section-label">Dados Pessoais</p>
+            <div class="form-row">
+              <div class="form-group" id="fg-firstName">
+                <label class="form-label" for="reg-firstName"
+                  >PRIMEIRO NOME</label
+                >
+                <input
+                  type="text"
+                  id="reg-firstName"
+                  class="form-input"
+                  required
+                  placeholder="Ana"
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+              <div class="form-group" id="fg-lastName">
+                <label class="form-label" for="reg-lastName">APELIDO</label>
+                <input
+                  type="text"
+                  id="reg-lastName"
+                  class="form-input"
+                  required
+                  placeholder="Domingos"
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-reg-email">
+                <label class="form-label" for="reg-email">E-MAIL</label>
+                <input
+                  type="email"
+                  id="reg-email"
+                  class="form-input"
+                  required
+                  placeholder="ana@exemplo.ao"
+                />
+                <span class="field-error">E-mail inválido.</span>
+              </div>
+              <div class="form-group" id="fg-reg-password">
+                <label class="form-label" for="reg-password">SENHA</label>
+                <input
+                  type="password"
+                  id="reg-password"
+                  class="form-input"
+                  required
+                  minlength="8"
+                  placeholder="mín. 8 caracteres"
+                />
+                <span class="field-error">Mínimo 8 caracteres.</span>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+            <p class="section-label">Documentação e Localização</p>
+            <div class="form-row">
+              <div class="form-group" id="fg-taxId">
+                <label class="form-label" for="reg-taxId">NIF / BI</label>
+                <input
+                  type="text"
+                  id="reg-taxId"
+                  class="form-input"
+                  required
+                  placeholder="000000000LA000"
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+              <div class="form-group" id="fg-birthDate">
+                <label class="form-label" for="reg-birthDate"
+                  >DATA DE NASCIMENTO</label
+                >
+                <input
+                  type="date"
+                  id="reg-birthDate"
+                  class="form-input"
+                  required
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-municipality">
+                <label class="form-label" for="reg-municipality"
+                  >MUNICÍPIO</label
+                >
+                <input
+                  type="text"
+                  id="reg-municipality"
+                  class="form-input"
+                  required
+                  placeholder="Luanda"
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+              <div class="form-group" id="fg-neighborhood">
+                <label class="form-label" for="reg-neighborhood">BAIRRO</label>
+                <input
+                  type="text"
+                  id="reg-neighborhood"
+                  class="form-input"
+                  required
+                  placeholder="Maianga"
+                />
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-gender">
+                <label class="form-label" for="reg-gender">GÉNERO</label>
+                <select id="reg-gender" class="form-input" required>
+                  <option value="">Selecionar...</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Feminino</option>
+                  <option value="O">Outro / Não informar</option>
+                </select>
+                <span class="field-error">Campo obrigatório.</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="btn-register">
+              <span>Criar Cadastro</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="auth-footer">2AM Library © — 2AM - ERP</div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="auth.js"></script>
+  </body>
+</html>

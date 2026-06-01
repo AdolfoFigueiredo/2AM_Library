@@ -25,6 +25,14 @@ export class UserRepository {
     return rows[0] as SafeUserDto;
   }
 
+  static async findForLogin(email: string) {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+      `SELECT email, passwordHash FROM Users where email = ?`,
+      [email],
+    );
+    return rows[0];
+  }
+
   static async getByEmail(email: string) {
     const [rows] = await pool.execute<RowDataPacket[]>(
       ` ${this.baseQuery} WHERE u.email = ? AND u.deletedAt IS NULL`,
@@ -47,6 +55,13 @@ export class UserRepository {
       [id],
     );
     return rows[0] as SafeUserDto;
+  }
+
+  static async getInactiveUsers() {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+      `SELECT * FROM v_InactiveCustomers`,
+    );
+    return rows || null;
   }
 
   static async create(dto: UserDto) {

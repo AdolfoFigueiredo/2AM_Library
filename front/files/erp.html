@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2AM Admin — Painel de Gestão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⬡</span>
+      <div class="logo-text">
+        <span class="logo-title">2AM</span>
+        <span class="logo-sub">ADMIN PANEL</span>
+      </div>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="profile-avatar">AD</div>
+      <div class="profile-info">
+        <span class="profile-name">Ana Domingos</span>
+        <span class="profile-role">Administrador</span>
+      </div>
+      <div class="profile-status-dot"></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-label">PRINCIPAL</span>
+      <a href="#" class="nav-item active" data-screen="dashboard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item" data-screen="books">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Catálogo de Livros
+      </a>
+      <a href="#" class="nav-item" data-screen="categories">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 10h16M4 14h8M4 18h8"/></svg>
+        Categorias
+      </a>
+      <a href="#" class="nav-item" data-screen="stock">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        Gestão de Estoque
+      </a>
+      <a href="#" class="nav-item" data-screen="sales">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Vendas e Finanças
+      </a>
+
+      <span class="nav-label" style="margin-top: 1.5rem;">CONFIGURAÇÕES</span>
+      <a href="#" class="nav-item" data-screen="users">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Utilizadores
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="version-tag">v1.0.0 — Real API Connect</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay hidden" id="sidebarOverlay"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" class="search-input" placeholder="Filtrar dados globalmente na tela atual..." id="globalSearch" />
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn notify-btn" id="notifyBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notify-badge" id="notifyBadge">0</span>
+        </button>
+        <div class="topbar-divider"></div>
+        <div class="topbar-user">
+          <div class="topbar-avatar">AD</div>
+          <span class="topbar-name">Ana Domingos</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <section class="screen active" id="screen-dashboard">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Dashboard</h1>
+            <p class="screen-subtitle">Métricas em tempo real sincronizadas com o servidor</p>
+          </div>
+          <button class="btn btn-primary" id="btn-refresh-dash">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Sincronizar
+          </button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Faturamento Total</div>
+            <div class="kpi-value" id="kpi-revenue">Kz 0,00</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Vendas Hoje</div>
+            <div class="kpi-value" id="kpi-sales">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Novos Clientes</div>
+            <div class="kpi-value" id="kpi-clients">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Títulos Ativos</div>
+            <div class="kpi-value" id="kpi-books">0</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="card-header"><h3 class="card-title">Últimas Encomendas Procesadas</h3></div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID Pedido</th>
+                  <th>Cliente</th>
+                  <th>Valor Total</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="table-dash-orders"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen hidden" id="screen-books">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Catálogo de Livros</h1>
+            <p class="screen-subtitle">Gestão do acervo literário e preços</p>
+          </div>
+          <button class="btn btn-primary" onclick="Modal.open('modal-book')">Novo Livro</button>
+        </div>
+        <div class="data-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Preço</th>
+                  <th>Estoque</th>
+                  <th>ISBN</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="table-books-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen hidden" id="screen-categories">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Categorias</h1>
+            <p class="screen-subtitle">Organização taxonômica do catálogo</p>
+          </div>
+        </div>
+        <div class="categories-layout">
+          <div class="data-card">
+            <div class="card-header"><h3 class="card-title">Nova Categoria</h3></div>
+            <form id="form-category" class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Nome da Categoria</label>
+                <input type="text" id="cat-name" class="form-input" required placeholder="Ex: Poesia Angolana" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Slug URL</label>
+                <input type="text" id="cat-slug" class="form-input" required placeholder="ex-poesia-angolana" />
+              </div>
+              <button type="submit" class="btn btn-primary w-full" style="margin-top: 10px;">Salvar Categoria</button>
+            </form>
+          </div>
+          <div class="data-card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Slug</th>
+                    <th>Livros Associados</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-categories-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen hidden" id="screen-stock">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Gestão de Estoque</h1>
+            <p class="screen-subtitle">Rupturas de estoque e alertas críticos de fornecimento</p>
+          </div>
+        </div>
+        <div class="data-card">
+          <div class="card-header"><h3 class="card-title" class="danger">Alertas de Críticos (<= 5 unidades)</h3></div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Livro</th>
+                  <th>Estoque Atual</th>
+                  <th>Fornecedor Padrão</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="table-stock-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen hidden" id="screen-sales">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Vendas e Finanças</h1>
+            <p class="screen-subtitle">Fluxo de caixa de transações comerciais</p>
+          </div>
+        </div>
+        <div class="data-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID Venda</th>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Faturamento</th>
+                  <th>Estado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="table-sales-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen hidden" id="screen-users">
+        <div class="screen-header">
+          <div>
+            <h1 class="screen-title">Utilizadores</h1>
+            <p class="screen-subtitle">Controle de acessos de funcionários e clientes registrados</p>
+          </div>
+          <button class="btn btn-primary" onclick="Modal.open('modal-user')">Criar Utilizador</button>
+        </div>
+        <div class="data-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Nível de Acesso</th>
+                  <th>Data Registro</th>
+                  <th>Estado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="table-users-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="modal-book">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="book-modal-title">Adicionar Título ao Catálogo</h2>
+        <button class="modal-close" onclick="Modal.close('modal-book')">&times;</button>
+      </div>
+      <form id="form-book">
+        <input type="hidden" id="book-id" />
+        <div class="form-grid">
+          <div class="form-group form-col-2">
+            <label class="form-label">Título do Livro</label>
+            <input type="text" id="book-title" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Autor</label>
+            <input type="text" id="book-author" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preço (Kz)</label>
+            <input type="number" id="book-price" class="form-input" required />
+          </div>
+          <div class="form-group form-col-2">
+            <label class="form-label">Código ISBN</label>
+            <input type="text" id="book-isbn" class="form-input" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="Modal.close('modal-book')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Título</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="modal-replenish">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Abastecer Estoque</h2>
+        <button class="modal-close" onclick="Modal.close('modal-replenish')">&times;</button>
+      </div>
+      <form id="form-replenish">
+        <input type="hidden" id="replenish-book-id" />
+        <div class="form-group">
+          <label class="form-label">Quantidade de Unidades a dar Entrada</label>
+          <input type="number" id="replenish-qty" class="form-input" min="1" required placeholder="Ex: 50" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="Modal.close('modal-replenish')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar Entrada</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="modal-user">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Novo Utilizador</h2>
+        <button class="modal-close" onclick="Modal.close('modal-user')">&times;</button>
+      </div>
+      <form id="form-user">
+        <div class="form-group">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" id="user-name" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail Corporativo/Cliente</label>
+          <input type="email" id="user-email" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nível de Permissão</label>
+          <select id="user-role" class="form-input">
+            <option value="client">Cliente</option>
+            <option value="employee">Funcionário de Caixa</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="Modal.close('modal-user')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Criar Cadastro</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

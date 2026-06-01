@@ -1,0 +1,25 @@
+meta {
+  name: Login Admin
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "{{adminEmail}}",
+    "password": "{{adminPassword}}"
+  }
+}
+
+script:post-response {
+  // 💡 Script nativo do Bruno para salvar o token automaticamente!
+  if (res.status === 200 && res.body.success) {
+    bru.setEnvVar("tokenAdmin", res.body.data.token);
+  }
+}

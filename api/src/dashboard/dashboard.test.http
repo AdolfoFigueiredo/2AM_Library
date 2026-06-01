@@ -1,0 +1,14 @@
+### =================================================================
+### MÓDULO ADMINISTRATIVO (DASHBOARD & ERP)
+### =================================================================
+@url = http://localhost:4000/api
+
+# @name getDashboardOverview
+### Obtém os contadores dos cartões (Faturamento Total, Vendas e Pedidos Pendentes) e o Top 10 Livros
+GET {{url}}/dashboard/overview
+
+###
+
+# @name getSalesReport
+### Obtém a listagem analítica de faturamento vinda da View v_SalesSummary
+GET {{url}}/dashboard/sales-report

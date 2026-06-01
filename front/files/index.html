@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2AM Library — Sistema de Gestão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="landing-page" class="view-section">
+    <div class="landing-hero">
+      <div class="hero-badge">⬡ Neomorphic Library System</div>
+      <h1 class="hero-title">Gestão Literária<br><span class="text-gradient">Futurista e Precisa.</span></h1>
+      <p class="hero-subtitle">Controle de estoque, fluxo de caixa, monitoramento de vendas e relatórios em tempo real com integração MySQL de alta performance.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" id="btn-go-auth">Aceder ao Painel ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="auth-page" class="view-section hidden">
+    <div class="auth-container">
+      <div class="auth-box" id="login-box">
+        <h2 class="auth-title">Iniciar Sessão</h2>
+        <p class="auth-subtitle">Introduza as suas credenciais administrativas</p>
+        <form id="form-login">
+          <div class="form-group">
+            <label>E-mail Corporativo</label>
+            <input type="email" id="login-email" class="form-control" placeholder="nome@2am.com" required>
+          </div>
+          <div class="form-group">
+            <label>Palavra-passe</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Entrar no Sistema</button>
+        </form>
+        <p class="auth-switch">Não tem uma conta? <a href="#" id="link-to-register">Criar conta</a></p>
+      </div>
+
+      <div class="auth-box hidden" id="register-box">
+        <h2 class="auth-title">Criar Conta</h2>
+        <p class="auth-subtitle">Registe um novo operador no sistema</p>
+        <form id="form-register">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Primeiro Nome</label>
+              <input type="text" id="reg-firstname" class="form-control" placeholder="Ex: Ana" required>
+            </div>
+            <div class="form-group">
+              <label>Último Nome</label>
+              <input type="text" id="reg-lastname" class="form-control" placeholder="Ex: Domingos" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="exemplo@2am.com" required>
+          </div>
+          <div class="form-group">
+            <label>Palavra-passe</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Mínimo 6 caracteres" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Finalizar Registo</button>
+        </form>
+        <p class="auth-switch">Já possui cadastro? <a href="#" id="link-to-login">Fazer Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-wrapper" class="view-section hidden">
+    </div>
+
+  <div id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

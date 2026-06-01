@@ -12,7 +12,7 @@
 
 # Sobre o Projeto
 
-O **2AM** é um sistema integrado de gestão de livraria baseado em arquitetura omnichannel, desenvolvido para centralizar e unificar operações de:
+w
 
 - Ecommerce
 - ERP (Backoffice)
@@ -440,7 +440,7 @@ O sistema deve possuir:
 
 # Objetivos Acadêmicos
 
-Este projeto tem como objetivo aplicar:
+Este projeto tem como objetivo apjlicar:
 
 - modelagem de dados;
 - bancos de dados relacionais;

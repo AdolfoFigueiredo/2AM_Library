@@ -6,9 +6,8 @@ import { CreateBookSchema, UpdateBookSchema } from "./book.dto.js";
 const router = Router();
 
 router.post("/", validateBody(CreateBookSchema), BookController.create);
-router.get("/", BookController.getAll);
-router.get("/search/filter", BookController.getByFilters);
 router.get("/:id", BookController.getById);
+router.get("/top-selling", BookController.getTopSellings);
 router.put("/:id", validateBody(UpdateBookSchema), BookController.update);
 router.delete("/:id", BookController.delete);
 

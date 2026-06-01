@@ -1,5 +1,6 @@
 import { UserRepository } from "./user.repository.js";
 import { CreateUserDto, UpdateUserDto, SafeUserDto } from "./user.dto.js";
+import * as bcrypt from "bcrypt";
 
 export class UserService {
   static async create(dto: CreateUserDto): Promise<number> {
@@ -8,7 +9,16 @@ export class UserService {
       throw new Error("E-mail já cadastrado no sistema.");
     }
 
-    return await UserRepository.create(dto as any);
+    const saltRounds = 12;
+    const passwordHash = await bcrypt.hash(dto.password, saltRounds);
+
+    const { password, ...userData } = dto;
+    const userToSave = {
+      ...userData,
+      passwordHash,
+    };
+
+    return await UserRepository.create(userToSave as any);
   }
 
   static async getById(id: number): Promise<SafeUserDto> {
@@ -17,6 +27,10 @@ export class UserService {
       throw new Error("Usuário não encontrado.");
     }
     return user;
+  }
+
+  static async getInactive() {
+    return await UserRepository.getInactiveUsers();
   }
 
   static async getAll(limit?: number): Promise<SafeUserDto[]> {

@@ -1,0 +1,39 @@
+### =================================================================
+### WORKSPACE PLUG-AND-PLAY: CENTRAL DE AUTENTICAÇÃO
+### =================================================================
+
+@baseUrl = http://localhost:4000/api
+
+# @name loginAdmin
+### 1. Iniciar Sessão como Administrador (Acesso Total)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin.master@library.com",
+  "password": "SenhaUltraSegura123"
+}
+
+###
+
+# @name loginEmployee
+### 2. Iniciar Sessão como Funcionário (Operacional / ERP)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carlos.operacoes@library.com",
+  "password": "SenhaFuncionario123"
+}
+
+###
+
+# @name loginCustomer
+### 3. Iniciar Sessão como Cliente (E-commerce / Compras)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "bruno.cliente@gmail.com",
+  "password": "SenhaCliente123"
+}

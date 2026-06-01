@@ -1,10 +1,16 @@
 import { BookRepository } from "./book.repository.js";
-import { CreateBookDto, BookFiltersDto, UpdateBookDto } from "./book.dto.js";
+import {
+  CreateBookDto,
+  GetBooksQuerySchema,
+  GetBookSchema,
+  UpdateBookDto,
+} from "./book.dto.js";
+import { BaseQueryPagination } from "../utils/dynamicFilter.js";
 
 export class BookService {
   static async create(dto: CreateBookDto) {
     if (dto.isbn) {
-      const existingBook = await BookRepository.getByIsbn(dto.isbn);
+      const existingBook = await BookRepository.findByIsbn(dto.isbn);
       if (existingBook) {
         throw new Error("Já existe um livro ativo cadastrado com este ISBN.");
       }
@@ -13,23 +19,19 @@ export class BookService {
   }
 
   static async getById(id: number) {
-    const book = await BookRepository.getById(id);
+    const book = await BookRepository.findById(id);
     if (!book) {
       throw new Error("Livro não encontrado ou desativado.");
     }
     return book;
   }
 
-  static async getAll(limit?: number) {
-    return await BookRepository.getAll(limit);
-  }
-
   static async getByISBN(isbn: string) {
-    return await BookRepository.getByIsbn(isbn);
+    return await BookRepository.findByIsbn(isbn);
   }
 
-  static async findByFilters(filters: BookFiltersDto) {
-    return await BookRepository.findByFilters(filters);
+  static async findTopSellings() {
+    return await BookRepository.findTopSellingsBooks();
   }
 
   static async update(id: number, dto: UpdateBookDto) {

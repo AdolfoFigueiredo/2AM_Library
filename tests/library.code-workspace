@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "rest-client.environmentVariables": {
+      "$shared": {
+        "baseUrl": "http://localhost:4000/api",
+      },
+    },
+    "extensions.recommendations": ["humao.rest-client"],
+  },
+}

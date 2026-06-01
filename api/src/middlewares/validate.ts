@@ -8,7 +8,6 @@ export const validateBody = (schema: ZodSchema) => {
     next: NextFunction,
   ): Promise<any> => {
     try {
-      // O Zod parseia e limpa o req.body (remove campos injetados que não estão no schema)
       req.body = await schema.parseAsync(req.body);
       return next();
     } catch (error) {
@@ -17,7 +16,7 @@ export const validateBody = (schema: ZodSchema) => {
         return res.status(400).json({
           status: "error",
           message: "Falha na validação dos dados enviados.",
-          errors: error.errors.map((err) => ({
+          errors: error.issues.map((err) => ({
             field: err.path.join("."),
             message: err.message,
           })),

@@ -1,0 +1,33 @@
+### =================================================================
+### MÓDULO DE CATEGORIAS
+### =================================================================
+@url = http://localhost:4000/api
+
+
+# @name createCategory
+POST {{url}}/categories
+Content-Type: application/json
+
+{
+  "name": "Terror"
+}
+
+###
+
+# @name getAllCategories
+GET {{url}}/categories
+
+###
+
+# @name updateCategory
+PUT {{url}}/categories/1
+Content-Type: application/json
+
+{
+  "name": "Sci-Fi & Cyberpunk"
+}
+
+###
+
+# @name deleteCategory
+DELETE {{url}}/categories/1

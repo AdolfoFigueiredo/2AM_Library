@@ -1,0 +1,26 @@
+meta {
+  name: Criar Fornecedor
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/suppliers
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenAdmin}}
+}
+
+body:json {
+  {
+    "name": "Distribuidora Bruno Client",
+    "taxId": "PT599888777"
+  }
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:4000/api
+}

@@ -1,0 +1,39 @@
+### =================================================================
+### CENTRAL DE AUTENTICAÇÃO E SESSÕES
+### =================================================================
+
+@baseUrl = http://localhost:4000/api
+
+# @name loginAdmin
+### 1. Autenticar como Administrador (Acesso Total)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin.master@library.com",
+  "password": "SenhaUltraSegura123"
+}
+
+### 
+
+# @name loginEmployee
+### 2. Autenticar como Funcionário (Operacional/Logística)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carlos.operacoes@library.com",
+  "password": "SenhaFuncionario123"
+}
+
+###
+
+# @name loginCustomer
+### 3. Autenticar como Cliente (E-commerce/Carrinho)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "bruno.cliente@gmail.com",
+  "password": "SenhaCliente123"
+}

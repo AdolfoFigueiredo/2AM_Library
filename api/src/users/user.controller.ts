@@ -50,6 +50,15 @@ export class UserController {
     }
   }
 
+  static async getInactive(req: Request, res: Response): Promise<void> {
+    try {
+      const users = await UserService.getInactive();
+      ApiResponse.success(res, users);
+    } catch (error: any) {
+      ApiResponse.error(res, error.message, 500);
+    }
+  }
+
   static async update(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);

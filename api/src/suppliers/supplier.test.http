@@ -1,0 +1,59 @@
+### =================================================================
+### MÓDULO ERP: GESTÃO DE FORNECEDORES (`/suppliers`)
+### =================================================================
+
+@baseUrl = http://localhost:4000/api
+@taxIdTemplate = "PT540994848"
+
+# @name criarFornecedor
+### 1. Criar um Novo Fornecedor (Distribuidora)
+POST {{baseUrl}}/suppliers
+Content-Type: application/json
+
+{
+  "name": "Distribuidora de Livrs Géronimo & Filhos",
+  "taxId": {{taxIdTemplate}}
+}
+
+### Captura o ID do fornecedor criado para os próximos testes
+@supplierId = 4
+ {{criarFornecedor.response.body.data.id}}
+
+
+# @name adicionarTelefone
+### 2. Associar um Número de Telefone ao Fornecedor Criado
+POST {{baseUrl}}/suppliers/{{supplierId}}/phones
+Content-Type: application/json
+
+{
+  "phone": "+351 210 999 888"
+}
+
+
+# @name listarFornecedores
+### 3. Listar Todos os Fornecedores Ativos (Consome Filtro Geral)
+GET {{baseUrl}}/suppliers
+Content-Type: application/json
+
+
+# @name obterDetalhesFornecedor
+### 4. Obter um Fornecedor Específico com os seus Telefones
+GET {{baseUrl}}/suppliers/{{supplierId}}
+Content-Type: application/json
+
+
+# @name atualizarFornecedor
+### 5. Atualizar os Dados Cadastrais do Fornecedor
+PUT {{baseUrl}}/suppliers/{{supplierId}}
+Content-Type: application/json
+
+{
+  "name": "Distribuidora Alfa-Lusa Lda",
+  "taxId": {{taxIdTemplate}}
+}
+
+
+# @name removerFornecedor
+### 6. Remover Fornecedor (Soft Delete)
+DELETE {{baseUrl}}/suppliers/{{supplierId}}
+Content-Type: application/json

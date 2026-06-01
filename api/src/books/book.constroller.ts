@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import { BookService } from "./book.service.js";
-import {
-  CreateBookSchema,
-  UpdateBookSchema,
-  BookFiltersSchema,
-} from "./book.dto.js";
+import { CreateBookSchema, UpdateBookSchema } from "./book.dto.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 export class BookController {
@@ -38,16 +34,6 @@ export class BookController {
       ApiResponse.success(res, book);
     } catch (error: any) {
       ApiResponse.error(res, error.message, 404);
-    }
-  }
-
-  static async getAll(req: Request, res: Response): Promise<void> {
-    try {
-      const limit = req.query.limit ? Number(req.query.limit) : undefined;
-      const books = await BookService.getAll(limit);
-      ApiResponse.success(res, books);
-    } catch (error: any) {
-      ApiResponse.error(res, error.message, 500);
     }
   }
 
@@ -95,30 +81,17 @@ export class BookController {
     try {
       const { isbn }: any = req.params;
       const book = await BookService.getByISBN(isbn);
+      ApiResponse.success(res, book, 200);
     } catch (error: any) {
       ApiResponse.error(res, error.message, 500);
     }
   }
 
-  // Adicione este método dentro da classe BookController
-  static async getByFilters(req: Request, res: Response): Promise<void> {
+  static async getTopSellings(req: Request, res: Response) {
     try {
-      // Valida os dados vindos de req.query (Query Strings)
-      const validatedFilters = BookFiltersSchema.parse(req.query);
-
-      const books = await BookService.findByFilters(validatedFilters);
-
-      ApiResponse.success(res, books);
+      const books = await BookService.findTopSellings();
+      ApiResponse.success(res, books, 200);
     } catch (error: any) {
-      if (error.issues) {
-        ApiResponse.error(
-          res,
-          "Filtros de busca inválidos.",
-          400,
-          error.format(),
-        );
-        return;
-      }
       ApiResponse.error(res, error.message, 500);
     }
   }

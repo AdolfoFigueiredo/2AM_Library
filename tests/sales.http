@@ -1,0 +1,33 @@
+### =================================================================
+### MÓDULO DE VENDAS E CHECKOUT
+### =================================================================
+
+### 1. Finalizar Compra (Acesso: Customer)
+POST {{baseUrl}}/sales/checkout
+Authorization: Bearer {{loginCustomer.response.body.data.token}}
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "saleType": "Online"
+}
+
+###
+
+# @name listarVendas
+### 2. Histórico de Vendas ERP (Acesso: Admin/Employee)
+GET {{baseUrl}}/sales?status=Pending&limit=5
+Authorization: Bearer {{loginEmployee.response.body.data.token}}
+
+###
+
+@saleId = {{listarVendas.response.body.data[0].saleId}}
+
+### 3. Alterar Estado da Venda (Acesso: Admin/Employee)
+PATCH {{baseUrl}}/sales/{{saleId}}/status
+Authorization: Bearer {{loginAdmin.response.body.data.token}}
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}

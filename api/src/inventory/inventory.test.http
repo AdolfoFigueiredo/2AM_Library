@@ -1,0 +1,23 @@
+### =================================================================
+### MÓDULO DE FECHAMENTO E LOGÍSTICA: GESTÃO DE ESTOQUE (ERP)
+### =================================================================
+ 
+ @url = http://localhost:4000/api
+
+# @name getLowStockAlerts
+### 1. Consultar relatórios de stock crítico/baixo no ERP
+GET {{url}}/inventory/low-stock
+
+###
+
+# @name replenishStock
+### 2. Dar entrada de mercadoria (Reabastecer Livro)
+POST {{url}}/inventory/replenish/
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "supplierId": 1,
+  "quantity": 20,
+  "purchasePrice": 35.50
+}

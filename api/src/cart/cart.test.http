@@ -1,0 +1,55 @@
+### =================================================================
+### MÓDULO E-COMMERCE: GESTÃO DO CARRINHO DE COMPRAS (`/cart`
+### =================================================================
+
+@baseUrl = http://localhost:4000/api
+@testUserId = 1
+@targetBookId = 1
+
+# @name adicionarPrimeiroItem
+### 1. Adicionar/Incrementar Livro no Carrinho (Ex: Livro ID 1
+### O banco de dados usará o ON DUPLICATE KEY UPDATE nativo se o livro já existir.
+POST {{baseUrl}}/cart/items
+Content-Type: application/json
+
+{
+  "userId": {{testUserId}},
+  "bookId": {{targetBookId}},
+  "quantity": 2
+}
+
+###
+
+# @name adicionarSegundoItem
+### 2. Adicionar outro Livro diferente (Ex: Livro ID 2)
+POST {{baseUrl}}/cart/items
+Content-Type: application/json
+
+{
+  "userId": {{testUserId}},
+  "bookId": 2,
+  "quantity": 1
+}
+
+###
+
+# @name obterCarrinho
+### 3. Consultar Carrinho Completo
+### Retorna a lista de itens, capas, subtotais e o total acumulado calculado pelo Service.
+GET {{baseUrl}}/cart
+Content-Type: application/json
+
+{
+  "userId": {{testUserId}}
+}
+
+###
+
+# @name removerItem
+### 4. Remover um Item Específico do Carrinho
+### Utiliza o ID gerado dinamicamente no teste anterior para o 'cartItemId'.
+### Se preferires testar manualmente, substitui a variável pelo ID real da tabela CartItems.
+@cartItemId = {{obterCarrinho.response.body.data.items[0].cartItemId}}
+
+DELETE {{baseUrl}}/cart/items/{{cartItemId}}
+Content-Type: application/json

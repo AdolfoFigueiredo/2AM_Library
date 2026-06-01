@@ -16,15 +16,7 @@ export const BookSchema = z.object({
   deletedAt: z.date().nullable(),
 });
 
-export const BookFiltersSchema = z.object({
-  name: z.string().optional(),
-  isbn: z.string().optional(),
-  authorId: z.coerce.number().positive().int().optional(),
-  publisherId: z.coerce.number().positive().int().optional(),
-  categoryId: z.coerce.number().positive().int().optional(),
-  limit: z.coerce.number().positive().int().optional(),
-});
-
+// 2. Schema de Criação e Atualização
 export const CreateBookSchema = BookSchema.omit({
   id: true,
   createdAt: true,
@@ -32,6 +24,21 @@ export const CreateBookSchema = BookSchema.omit({
   deletedAt: true,
 });
 export const UpdateBookSchema = CreateBookSchema.partial();
+
+export const BookFiltersSchema = z.object({
+  name: z.string().optional(),
+  isbn: z.string().optional(),
+  edition: z.string().optional(),
+  authorId: z.coerce.number().positive().int().optional(),
+  publisherId: z.coerce.number().positive().int().optional(),
+  categoryId: z.coerce.number().positive().int().optional(),
+
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().positive().max(100).default(10),
+  sortBy: z.string().default("id"),
+  order: z.enum(["ASC", "DESC", "asc", "desc"]).default("ASC"),
+});
+
 export type BookDto = z.infer<typeof BookSchema>;
 export type CreateBookDto = z.infer<typeof CreateBookSchema>;
 export type UpdateBookDto = z.infer<typeof UpdateBookSchema>;

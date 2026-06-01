@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:4000/api
+@tokenEmployee = {{loginEmployee.response.body.data.token}}
+
+# @name cadastrarLivro
+### 1. EMPLOYEE/ADMIN: Adicionar Novo Livro ao Catálogo
+POST {{baseUrl}}/books
+Authorization: Bearer {{tokenEmployee}}
+Content-Type: application/json
+
+{
+  "name": "Cem Anos de Solidão",
+  "releaseDate": "1967-05-30",
+  "publisherId": 1,
+  "description": "Obra-prima do realismo mágico de Gabriel García Márquez.",
+  "coverImageUrl": "https://imagens.com/cem-anos.jpg",
+  "edition": 1,
+  "authorId": 1,
+  "isbn": "9788520937518",
+  "currentPrice": 19.90
+}
+
+### Captura dinâmica do ID do livro inserido
+@bookId = {{cadastrarLivro.response.body.data.id}}
+
+###
+
+### 2. PUBLIC: Obter Livros Mais Vendidos (v_TopSellingBooks)
+GET {{baseUrl}}/books/top-selling
+
+###
+
+### 3. PUBLIC: Obter Detalhes Analíticos do Livro (v_BookDetails)
+GET {{baseUrl}}/books/{{bookId}}
+
+###
+
+### 4. EMPLOYEE/ADMIN: Atualizar Dados do Livro
+PUT {{baseUrl}}/books/{{bookId}}
+Authorization: Bearer {{tokenEmployee}}
+Content-Type: application/json
+
+{
+  "currentPrice": 22.50
+}
+
+###
+
+### 5. EMPLOYEE/ADMIN: Remover Livro do Catálogo (Soft Delete)
+DELETE {{baseUrl}}/books/{{bookId}}
+Authorization: Bearer {{tokenEmployee}}

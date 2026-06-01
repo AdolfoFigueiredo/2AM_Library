@@ -1,0 +1,52 @@
+### =================================================================
+### MÓDULO DE VENDAS E CHECKOUT (`/sales`)
+### =================================================================
+
+# @name processarCheckout
+### 1. E-COMMERCE: Finalizar Compra do Carrinho (Chama a Stored Procedure)
+### Nota: Certifica-te de que o userId 1 tem itens no carrinho (CartItems) antes de rodar.
+POST http://localhost:4000/api/sales/checkout
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "saleType": "Online"
+}
+
+###
+
+# @name listarTodasAsVendas
+### 2. ERP: Listar Histórico de Vendas (Consome v_SalesSummary com filtros)
+### Podes testar os filtros mudando o status (Pending, Completed, Cancelled) ou retirando-os.
+GET http://localhost:4000/api/sales?status=Completed&limit=10
+Content-Type: application/json
+
+###
+
+# @name buscarVendaPorId
+### 3. ERP/E-COMMERCE: Detalhes de uma Venda Específica por ID
+### Substitui o "1" no final do URL pelo ID real de uma venda gerada na tua base de dados.
+GET http://localhost:4000/api/sales/1
+Content-Type: application/json
+
+###
+
+# @name alterarStatusParaConcluido
+### 4. ERP: Atualizar Estado da Venda para Concluída (Faturamento Confirmado)
+PATCH http://localhost:4000/api/sales/1/status
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}
+
+###
+
+# @name alterarStatusParaCancelado
+### 5. ERP: Cancelar Venda (Estorno / Quebra de Negócio)
+PATCH http://localhost:4000/api/sales/1/status
+Content-Type: application/json
+
+{
+  "status": "Cancelled"
+}
